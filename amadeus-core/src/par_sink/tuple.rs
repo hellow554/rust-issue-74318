@@ -52,11 +52,7 @@ where
     }
 }
 
-pub struct AsyncTuple2<Source, C0, C1> {
-    Copy: C0,
-    B: C1,
-    pending: Option<Option<Source>>,
-}
+pub struct AsyncTuple2<Source, C0, C1>(Source, C0, C1);
 
 impl<Source, C0: PipeTaskAsync<Source>, C1: PipeTaskAsync<Source>> PipeTaskAsync<Source>
     for AsyncTuple2<Source, C0, C1>

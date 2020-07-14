@@ -84,14 +84,3 @@ where
         self.project().task.poll_run(cx, sink)
     }
 }
-impl<I, T, E, U> Iterator for IntoStream<I, U>
-where
-    I: Iterator<Item = Result<T, E>>,
-    T: Into<U>,
-{
-    type Item = Result<U, E>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        loop {}
-    }
-}

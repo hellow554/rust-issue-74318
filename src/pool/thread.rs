@@ -1,24 +1,15 @@
 use futures::{future, FutureExt, TryFutureExt};
 use std::future::Future;
 
-use super::util::Panicked;
-
 pub struct ThreadPool;
 impl ThreadPool {
-    pub fn new() -> Self {
-        loop {}
-    }
-
-    pub fn spawn<F, Fut, T>(&self, work: F) -> impl Future<Output = Result<T, Panicked>> + Send
+    pub fn spawn<F, Fut, T>(&self, work: F) -> impl Future<Output = Result<T, ()>> + Send
     where
         F: FnOnce() -> Fut + Send + 'static,
         Fut: Future<Output = T> + 'static,
         T: Send + 'static,
     {
-        let _self = self;
-        tokio::task::spawn(DuckSend(future::lazy(|_| work()).flatten()))
-            .map_err(tokio::task::JoinError::into_panic)
-            .map_err(Panicked::from)
+        tokio::task::spawn(DuckSend(future::lazy(|_| work()).flatten())).map_err(|_| ())
     }
 }
 
@@ -39,5 +30,4 @@ where
         self.project().0.poll(cx)
     }
 }
-#[allow(unsafe_code)]
 unsafe impl<F> Send for DuckSend<F> {}

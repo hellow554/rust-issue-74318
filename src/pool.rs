@@ -1,7 +1,6 @@
 mod thread;
-pub(crate) mod util;
 
-use futures::future::{BoxFuture, TryFutureExt};
+use futures::future::BoxFuture;
 use std::{error::Error, future::Future};
 
 pub use thread::ThreadPool;
@@ -17,6 +16,7 @@ impl ThreadPoolTrait for ThreadPool {
         Fut: Future<Output = T> + 'static,
         T: Send + 'static,
     {
-        Box::pin(ThreadPool::spawn(self, work).map_err(|e| Box::new(e) as _))
+        let _ = ThreadPool::spawn(self, work);
+        todo!()
     }
 }

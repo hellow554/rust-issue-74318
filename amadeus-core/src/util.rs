@@ -22,18 +22,13 @@ where
 pub enum ResultExpandIter<T> {
     Ok(#[pin] T),
 }
-impl<T> ResultExpandIter<T> {
-    pub fn new(_: Result<T, ()>) -> ResultExpandIter<T> {
-        loop {}
-    }
-}
 impl<T> Iterator for ResultExpandIter<T>
 where
     T: Iterator,
 {
     type Item = Result<T::Item, ()>;
     fn next(&mut self) -> Option<Self::Item> {
-        loop {}
+        todo!()
     }
 }
 impl<T> Stream for ResultExpandIter<T>
@@ -45,22 +40,15 @@ where
         match self.project() {
             ResultExpandIterProj::Ok(t) => t.poll_next(cx),
         };
-        Poll::Ready(Some(Err(())))
+        Poll::Ready(None)
     }
 }
 
-#[repr(transparent)]
-pub struct DistParStream<S>(S);
+pub struct DistParStream<S>(pub S);
 impl<S> ParallelStream for DistParStream<S>
 where
     S: DistributedStream,
 {
     type Item = S::Item;
     type Task = S::Task;
-}
-
-impl<S> DistParStream<S> {
-    pub fn new(s: S) -> Self {
-        loop {}
-    }
 }

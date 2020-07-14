@@ -3,44 +3,16 @@
 [package]
 name = "amadeus"
 version = "0.2.0"
-license = "Apache-2.0"
 authors = ["Alec Mocatta <alec@mocatta.net>"]
-categories = ["concurrency", "science", "database", "parser-implementations", "text-processing"]
-keywords = ["constellation", "distributed", "data-science", "data", "logs"]
-description = """
-Harmonious distributed data processing & analysis in Rust.
-
-"""
-repository = "https://github.com/alecmocatta/amadeus"
-homepage = "https://github.com/alecmocatta/amadeus"
-documentation = "https://docs.rs/amadeus/0.2.0"
-readme = "README.md"
 edition = "2018"
-
-[badges]
-azure-devops = { project = "alecmocatta/amadeus", pipeline = "tests", build = "26" }
-maintenance = { status = "actively-developed" }
-
-[features]
-aws = ["amadeus-aws"]
-# "doc" works around https://github.com/rust-lang/rust/issues/58011
-doc = ["amadeus-core/doc", "amadeus-aws/doc"] 
-
-[package.metadata.docs.rs]
-features = ["doc", "aws"]
 
 [dependencies]
 amadeus-core = { version = "=0.2.0", path = "amadeus-core" }
-amadeus-aws = { version = "=0.2.0", path = "amadeus-aws", optional = true }
+amadeus-aws = { version = "=0.2.0", path = "amadeus-aws" }
 futures = "0.3"
 pin-project = "0.4"
 tokio = { version = "0.2", features = ["rt-threaded", "rt-util"] }
 
 [dev-dependencies]
 tokio = { version = "0.2", features = ["macros", "time"] }
-
-
-[[test]]
-name = "cloudfront"
-required-features = ["aws"]
 

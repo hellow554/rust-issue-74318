@@ -4,11 +4,11 @@
 pub mod pool;
 pub mod source;
 
-pub struct CloudfrontRow {}
+pub struct CloudfrontRow;
 
 impl From<amadeus_aws::CloudfrontRow> for CloudfrontRow {
     fn from(_: amadeus_aws::CloudfrontRow) -> Self {
-        loop {}
+        todo!()
     }
 }
 
@@ -23,4 +23,12 @@ pub mod prelude {
     pub use super::{
         par_pipe::ParallelPipe, pool::ThreadPool, source::*, CloudfrontRow, ParallelStream,
     };
+}
+
+#[tokio::main]
+async fn main() {
+    let _ = prelude::Cloudfront
+        .par_stream()
+        .pipe_fork(&prelude::ThreadPool, (), ())
+        .await;
 }

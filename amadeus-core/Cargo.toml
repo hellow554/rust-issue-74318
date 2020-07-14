@@ -1,25 +1,8 @@
 [package]
 name = "amadeus-core"
 version = "0.2.0"
-license = "Apache-2.0"
 authors = ["Alec Mocatta <alec@mocatta.net>"]
-categories = ["concurrency", "science", "database", "parser-implementations", "text-processing"]
-keywords = ["amadeus", "distributed", "data-science", "data", "logs"]
-description = """
-Harmonious distributed data analysis in Rust.
-"""
-repository = "https://github.com/alecmocatta/amadeus"
-homepage = "https://github.com/alecmocatta/amadeus"
-documentation = "https://docs.rs/amadeus/0.2.0"
-readme = "README.md"
 edition = "2018"
-
-[badges]
-azure-devops = { project = "alecmocatta/amadeus", pipeline = "tests" }
-maintenance = { status = "actively-developed" }
-
-[features]
-doc = []
 
 [dependencies]
 async-trait = "0.1"
